@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+    production: false,
+    baseUrl: '127.0.0.1:8000',
+    fetchPostsUrl: '127.0.0.1:8000/photos/api/index/',
+    uploadPostUrl: '127.0.0.1:8000/photos/api/upload/',
 };
 
 /*

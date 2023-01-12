@@ -6,5 +6,6 @@ export interface IPost {
     imageFile: string;
     caption: string;
     likes: number;
+    liked: boolean;
     time: string;
 }
