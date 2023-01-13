@@ -56,7 +56,6 @@ describe('PhotosService', () => {
 
         service.fetchPosts().subscribe({
             next: (posts) => {
-                console.log(posts)
                 expect(posts).toEqual([{
                     id: 1,
                     likingUrl: "/photos/like-actions/1/",
