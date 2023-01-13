@@ -4,8 +4,8 @@ import {HomeComponent} from "./components/home/home.component";
 import {UploadComponent} from "./components/upload/upload.component";
 
 const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'upload', component: UploadComponent }
+    { path: '', component: HomeComponent, title: 'S3photos | all posts' },
+    { path: 'upload', component: UploadComponent, title: 'S3photos | upload' }
 ];
 
 @NgModule({

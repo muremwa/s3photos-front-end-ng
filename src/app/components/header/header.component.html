@@ -10,7 +10,7 @@
                         class="nav-link"
                         routerLink=""
                         routerLinkActive="active"
-                        [routerLinkActiveOptions]="{ exact: true }"
+                        [routerLinkActiveOptions]="routeActiveOptions"
                         (click)="isMenuCollapsed = true"
                     >Home</a>
                 </li>
@@ -19,8 +19,8 @@
                 </li>
             </ul>
 
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search for posts, uploader and tags" aria-label="Search">
+            <form class="d-flex" (ngSubmit)="queryPosts($event)">
+                <input name="post-query" class="form-control me-2" type="search" placeholder="Search for posts, uploader and tags" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>

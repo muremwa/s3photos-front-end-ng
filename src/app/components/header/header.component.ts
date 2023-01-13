@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {IsActiveMatchOptions, Router} from '@angular/router';
 
 
 @Component({
@@ -8,4 +9,22 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
     isMenuCollapsed = true;
+    routeActiveOptions: IsActiveMatchOptions = {
+        paths: 'exact',
+        queryParams: 'subset',
+        matrixParams: 'ignored',
+        fragment: 'ignored'
+    }
+
+    constructor(private router: Router) {}
+
+    async queryPosts(submitEvent: Event) {
+        const postQuery = (new FormData(submitEvent.target as HTMLFormElement)).get('post-query');
+
+        if (postQuery) {
+            await this.router.navigate([''], {
+                queryParams: { 'post-query': postQuery }
+            });
+        }
+    }
 }
