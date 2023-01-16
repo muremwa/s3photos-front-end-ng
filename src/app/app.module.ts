@@ -10,6 +10,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { RouterModule } from "@angular/router";
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { RouterModule } from "@angular/router";
         AppComponent,
         HeaderComponent,
         HomeComponent,
-        UploadComponent
+        UploadComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,
