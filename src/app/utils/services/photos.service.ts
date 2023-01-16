@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {map, Observable} from "rxjs";
-import {IPost} from "../../types/ipost";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
+import { map, Observable } from "rxjs";
+import { IPost } from "../../types/ipost";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
 
 
 export enum Cases {
@@ -61,7 +61,7 @@ export class PhotosService {
             return response.posts.map((post) => {
                 const newPost: { [index: string]: any } = {};
 
-                Object.entries(post).map(([key, value]) => {
+                Object.entries(post).forEach(([key, value]) => {
                     const newKey = this.changeCase(key, Cases.SNAKE_CASE, Cases.CAMEL_CASE);
                     newPost[newKey] = value;
                 });
