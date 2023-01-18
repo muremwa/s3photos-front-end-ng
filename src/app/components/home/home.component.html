@@ -1,1 +1,50 @@
-<p>home works!</p>
+<div class="every">
+    <ng-container *ngIf="posts.length > 0; else noPosts">
+        <div *ngFor="let post of posts" [class]="['post', 'card', 'post' + post.id]">
+            <img src="{{ post.imageFile }}" alt="" class="post-img">
+
+            <div class="post-info">
+                <!-- user and time info -->
+                <div class="info-post">
+                    <div class="uploader">
+                        <span class="uploader-info">
+                            <img src="assets/svg/user.svg" alt="user vector" class="user-vector vector">
+                            <a routerLink="" [queryParams]="{ 'post-query': post.uploadedBy }" class="uploader-name">{{ post.uploadedBy }}</a>
+                        </span>
+                    </div>
+
+                    <div class="date">
+                        <img src="assets/svg/clock.svg" alt="clock vector" class="clock-vector vector">
+                        <span class="posted-time">{{ post.cleanTime }}</span>
+                    </div>
+                </div>
+
+                <!-- Captions -->
+                <div class="caption">
+                    <p>{{ post.caption }}</p>
+                </div>
+
+                <div class="like">
+                    <img [src]="post.liked? 'assets/svg/heart_full.svg': 'assets/svg/heart.svg'" alt="Liking vector" class="vector liking">
+                    <span class="h-m-l">{{ post.likes }}</span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #noPosts>
+        <div class="container" id="no-posts">
+            <div class="text-center">
+                <h2>
+                    No posts available at this moment
+                    <ng-container *ngIf="photoService.postQuery"> for '{{ photoService.postQuery }}'</ng-container>
+                </h2>
+                <a routerLink="upload" [queryParams]="{ 'post-query': photoService.postQuery }" class="btn btn-dark upload-btn">
+                    Upload to
+                    <span class="s3">S3photos</span>
+                    <ng-container *ngIf="photoService.postQuery"> as {{ photoService.postQuery }}</ng-container>
+                </a>
+            </div>
+        </div>
+    </ng-template>
+</div>

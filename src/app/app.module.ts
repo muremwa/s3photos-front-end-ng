@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { NgbCollapseModule } from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,14 +20,15 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
         HeaderComponent,
         HomeComponent,
         UploadComponent,
-        NotFoundComponent
+        NotFoundComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
         NgbCollapseModule,
-        RouterModule
+        RouterModule,
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]
