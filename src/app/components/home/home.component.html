@@ -37,12 +37,12 @@
             <div class="text-center">
                 <h2>
                     No posts available at this moment
-                    <ng-container *ngIf="photoService.postQuery"> for '{{ photoService.postQuery }}'</ng-container>
+                    <ng-container *ngIf="postQuery"> for '{{ postQuery }}'</ng-container>
                 </h2>
-                <a routerLink="upload" [queryParams]="{ 'post-query': photoService.postQuery }" class="btn btn-dark upload-btn">
+                <a routerLink="upload" [queryParams]="{ 'as': postQuery }" class="btn btn-dark upload-btn">
                     Upload to
                     <span class="s3">S3photos</span>
-                    <ng-container *ngIf="photoService.postQuery"> as {{ photoService.postQuery }}</ng-container>
+                    <ng-container *ngIf="postQuery"> as {{ postQuery }}</ng-container>
                 </a>
             </div>
         </div>

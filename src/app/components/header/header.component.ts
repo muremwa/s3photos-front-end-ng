@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IsActiveMatchOptions, Router } from '@angular/router';
 import { PhotosService } from "../../utils/services/photos.service";
 
@@ -8,7 +8,8 @@ import { PhotosService } from "../../utils/services/photos.service";
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.sass'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+    postQuery: string;
     isMenuCollapsed = true;
     routeActiveOptions: IsActiveMatchOptions = {
         paths: 'exact',
@@ -19,12 +20,18 @@ export class HeaderComponent {
 
     constructor(private router: Router, public photoService: PhotosService) {}
 
-    async queryPosts(submitEvent: Event) {
-        const postQuery = (new FormData(submitEvent.target as HTMLFormElement)).get('post-query')?.toString();
+    ngOnInit() {
+        this.photoService.postQuery.subscribe((value) => {
+            this.postQuery = value;
+        });
+    }
 
-        if (postQuery) {
+    async queryPosts(submitEvent: Event) {
+        const postQueryValue = (new FormData(submitEvent.target as HTMLFormElement)).get('post-query')?.toString();
+
+        if (postQueryValue) {
             await this.router.navigate([''], {
-                queryParams: { 'post-query': postQuery }
+                queryParams: { 'post-query': postQueryValue }
             });
         }
     }

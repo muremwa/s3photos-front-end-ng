@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable } from "rxjs";
+import { catchError, map, Observable, of, Subject } from "rxjs";
 import { IPost } from "../../types/ipost";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
@@ -14,7 +14,7 @@ export enum Cases {
     providedIn: 'root'
 })
 export class PhotosService {
-    postQuery: string;
+    postQuery = new Subject<string>();
 
     constructor(private http: HttpClient) {}
 
@@ -55,11 +55,15 @@ export class PhotosService {
         return result;
     };
 
-    fetchPosts(): Observable<Array<IPost>> {
-        type fetchResponse = { posts: Array<{ [index: string]: any }>, liked: Array<number>};
+    fetchPosts(postQuery: string | null): Observable<{ success: boolean, posts: Array<IPost>}> {
+        type fetchResponse = { posts: Array<{ [index: string]: any }>, liked: Array<number> };
+        const params = postQuery? { 'post-query': postQuery }: void 0;
 
-        return this.http.get<fetchResponse>(environment.fetchPostsUrl).pipe(map((response) =>{
-            return response.posts.map((post) => {
+        return this.http.get<fetchResponse>(
+            environment.fetchPostsUrl,
+            { params, withCredentials: true }
+        ).pipe(map((response) => {
+            const newPosts = response.posts.map((post) => {
                 const newPost: { [index: string]: any } = {};
 
                 Object.entries(post).forEach(([key, value]) => {
@@ -67,13 +71,14 @@ export class PhotosService {
                     newPost[newKey] = value;
                 });
 
-                // add liked property
                 if (response.liked.includes(newPost['id'])) {
                     newPost['liked'] = true;
                 }
 
                 return newPost as IPost;
             });
-        }));
+
+            return { success: true, posts: newPosts }
+        }), catchError(() => of({ success: false, posts: [] })));
     }
 }

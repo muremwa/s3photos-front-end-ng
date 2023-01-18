@@ -20,7 +20,7 @@
             </ul>
 
             <form class="d-flex" (ngSubmit)="queryPosts($event)">
-                <input value="{{ photoService.postQuery }}" name="post-query" class="form-control me-2" type="search" placeholder="Search for posts, uploader and tags" aria-label="Search">
+                <input value="{{ postQuery }}" name="post-query" class="form-control me-2" type="search" placeholder="Search for posts, uploader and tags" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
