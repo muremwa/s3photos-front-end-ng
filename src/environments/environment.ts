@@ -5,8 +5,8 @@
 export const environment = {
     production: false,
     baseUrl: '127.0.0.1:8000',
-    fetchPostsUrl: '127.0.0.1:8000/photos/api/index/',
-    uploadPostUrl: '127.0.0.1:8000/photos/api/upload/',
+    fetchPostsUrl: '/photos/api/index/',
+    uploadPostUrl: '/photos/api/upload/',
 };
 
 /*
