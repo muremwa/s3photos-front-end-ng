@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IsActiveMatchOptions, Router } from '@angular/router';
 import { PhotosService } from "../../utils/services/photos.service";
 
@@ -9,6 +9,7 @@ import { PhotosService } from "../../utils/services/photos.service";
     styleUrls: ['./header.component.sass'],
 })
 export class HeaderComponent implements OnInit {
+    @ViewChild('topNav') navBar: ElementRef;
     postQuery: string;
     isMenuCollapsed = true;
     routeActiveOptions: IsActiveMatchOptions = {
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
         this.photoService.postQuery.subscribe((value) => {
             this.postQuery = value;
+            this.navBar.nativeElement.scrollIntoView(); // navigate to top of page
         });
     }
 
