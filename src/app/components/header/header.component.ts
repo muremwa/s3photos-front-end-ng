@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {IsActiveMatchOptions, Router} from '@angular/router';
+import { IsActiveMatchOptions, Router } from '@angular/router';
+import { PhotosService } from "../../utils/services/photos.service";
 
 
 @Component({
@@ -16,10 +17,10 @@ export class HeaderComponent {
         fragment: 'ignored'
     }
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, public photoService: PhotosService) {}
 
     async queryPosts(submitEvent: Event) {
-        const postQuery = (new FormData(submitEvent.target as HTMLFormElement)).get('post-query');
+        const postQuery = (new FormData(submitEvent.target as HTMLFormElement)).get('post-query')?.toString();
 
         if (postQuery) {
             await this.router.navigate([''], {

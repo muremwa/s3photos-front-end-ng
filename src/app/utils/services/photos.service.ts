@@ -14,6 +14,7 @@ export enum Cases {
     providedIn: 'root'
 })
 export class PhotosService {
+    postQuery: string;
 
     constructor(private http: HttpClient) {}
 
