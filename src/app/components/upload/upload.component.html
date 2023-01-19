@@ -1,5 +1,5 @@
 <div class="cloud">
-    <form method="POST" id="form-upload" enctype="multipart/form-data">
+    <form [formGroup]="uploadForm" method="POST" id="form-upload" enctype="multipart/form-data" (submit)="submitPost($event)">
         <div class="text-center legend-form">Upload an image to <span class="s3">s3photos</span></div>
 
         <div class="img-to-up">
@@ -9,33 +9,48 @@
 
         <!-- Image File -->
         <div class="form-group">
-            <ngb-alert type="info">Choose an image</ngb-alert>
+            <ngb-alert *ngIf="uploadForm.controls.file.invalid && uploadForm.controls.file.touched; else fileInfo" type="danger">
+                An image is required
+            </ngb-alert>
+            <ng-template #fileInfo><ngb-alert type="info">Choose an image</ngb-alert></ng-template>
             <label for="image-file-input">File</label>
-            <input type="file" accept="image/*" class="form-control" name="file" id="image-file-input">
+            <input required formControlName="file" type="file" accept="image/*" class="form-control" name="file" id="image-file-input">
         </div>
 
         <hr>
 
         <!-- Caption -->
         <div class="form-group">
-            <ngb-alert type="danger">We think you image needs a caption to say what it's about.</ngb-alert>
-            <ngb-alert type="info">Tell others what the image is about</ngb-alert>
+            <ngb-alert *ngIf="uploadForm.controls.caption.touched && uploadForm.controls.caption.invalid; else captionInfo" type="danger">
+                We think your image needs a caption to say what it's about.
+            </ngb-alert>
+
+            <ng-template #captionInfo><ngb-alert type="info">Tell others what the image is about</ngb-alert></ng-template>
             <label for="caption-input">Caption</label>
-            <textarea name="caption" id="caption-input" cols="40" rows="10" class="form-control"></textarea>
+            <textarea required formControlName="caption" name="caption" id="caption-input" cols="40" rows="10" class="form-control"></textarea>
         </div>
 
         <hr>
 
         <!-- Name -->
         <div class="form-group">
-            <ngb-alert type="danger">A valid name needs be longer.</ngb-alert>
-            <ngb-alert type="info">Enter a name you would like to be known as</ngb-alert>
+            <!-- Show error messages -->
+            <ng-container *ngIf="uploadForm.controls.yourName.invalid && uploadForm.controls.yourName.touched; else nameCaption">
+                <ngb-alert type="danger" *ngFor="let error of uploadForm.controls.yourName.errors! | objectEntries" [ngSwitch]="error[0]">
+                    <ng-container *ngSwitchCase="'minlength'">A valid name needs be longer than '{{ uploadForm.controls.yourName.value }}'</ng-container>
+                    <ng-container *ngSwitchCase="'pattern'">A valid name cannot contain numbers.</ng-container>
+                    <ng-container *ngSwitchCase="'required'">A name is required.</ng-container>
+                </ngb-alert>
+            </ng-container>
+
+            <ng-template #nameCaption><ngb-alert type="info">Enter a name you would like to be known as</ngb-alert></ng-template>
+
             <label for="name-input">Your name</label>
-            <input type="text" class="form-control" id="name-input">
+            <input pattern="\D*" minlength="3" required formControlName="yourName" name="your_name" type="text" class="form-control" id="name-input">
         </div>
 
         <hr>
 
-        <button type="submit" class="btn btn-dark upload-btn">Upload to <span class="s3">s3photos</span></button>
+        <button [disabled]="uploadForm.invalid" type="submit" class="btn btn-dark upload-btn">Upload to <span class="s3">s3photos</span></button>
     </form>
 </div>

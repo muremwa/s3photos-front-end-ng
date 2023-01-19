@@ -1,5 +1,5 @@
 export interface IUploadErrors {
-    caption: string | null;
-    file: string | null;
-    name: string | null;
+    caption: Array<string>;
+    file: Array<string>;
+    your_name: Array<string>;
 }

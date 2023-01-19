@@ -3,6 +3,7 @@ import { catchError, map, Observable, of, Subject } from "rxjs";
 import { IPost } from "../../types/ipost";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
+import { IUploadErrors } from "../../types/iupload-errors";
 
 
 export enum Cases {
@@ -90,5 +91,22 @@ export class PhotosService {
         ).pipe(map((data) => {
             return { success: true, ...data }
         }), catchError(() => of({ success: false, likes: 0, liked: false })));
+    }
+
+    uploadPost(data: FormData): Observable<{ success: boolean, post: IPost | null, errors: IUploadErrors }> {
+        type uploadResponse = { success: true, post: IPost } | { success: false, errors: IUploadErrors };
+
+        return this.http.post<uploadResponse>(
+            environment.uploadPostUrl,
+            data,
+            { withCredentials: true }
+        ).pipe(map((response) => {
+            console.assert(response.success);
+            return {
+                success: true,
+                post: response.success ? response.post : null,
+                errors: { caption: [], file: [], your_name: []}
+            }
+        }), catchError(({ error }) => of({ success: false, post: null, errors: error.errors })));
     }
 }
