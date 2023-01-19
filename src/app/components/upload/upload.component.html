@@ -1,1 +1,41 @@
-<p>upload works!</p>
+<div class="cloud">
+    <form method="POST" id="form-upload" enctype="multipart/form-data">
+        <div class="text-center legend-form">Upload an image to <span class="s3">s3photos</span></div>
+
+        <div class="img-to-up">
+            <h6 class="text-center">You are about to upload the image below</h6>
+            <img src="" alt="image to be uploaded" id="image-to-call">
+        </div>
+
+        <!-- Image File -->
+        <div class="form-group">
+            <ngb-alert type="info">Choose an image</ngb-alert>
+            <label for="image-file-input">File</label>
+            <input type="file" accept="image/*" class="form-control" name="file" id="image-file-input">
+        </div>
+
+        <hr>
+
+        <!-- Caption -->
+        <div class="form-group">
+            <ngb-alert type="danger">We think you image needs a caption to say what it's about.</ngb-alert>
+            <ngb-alert type="info">Tell others what the image is about</ngb-alert>
+            <label for="caption-input">Caption</label>
+            <textarea name="caption" id="caption-input" cols="40" rows="10" class="form-control"></textarea>
+        </div>
+
+        <hr>
+
+        <!-- Name -->
+        <div class="form-group">
+            <ngb-alert type="danger">A valid name needs be longer.</ngb-alert>
+            <ngb-alert type="info">Enter a name you would like to be known as</ngb-alert>
+            <label for="name-input">Your name</label>
+            <input type="text" class="form-control" id="name-input">
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-dark upload-btn">Upload to <span class="s3">s3photos</span></button>
+    </form>
+</div>
