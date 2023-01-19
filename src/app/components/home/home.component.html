@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="like">
-                    <img [src]="post.liked? 'assets/svg/heart_full.svg': 'assets/svg/heart.svg'" alt="Liking vector" class="vector liking">
+                    <img (click)="reactToPost(post.likingUrl, post.id)" [src]="post.liked? 'assets/svg/heart_full.svg': 'assets/svg/heart.svg'" alt="Liking vector" class="vector liking">
                     <span class="h-m-l">{{ post.likes }}</span>
                 </div>
             </div>

@@ -48,4 +48,17 @@ export class HomeComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+    reactToPost(likingUrl: string, postId: number) {
+        const post = this.posts.find((post) => post.id === postId);
+
+        if (post) {
+            this.photoService.postReaction(likingUrl).subscribe(({ success, likes, liked }) => {
+                if (success) {
+                    post.likes = likes;
+                    post.liked = liked
+                }
+            });
+        }
+    }
 }

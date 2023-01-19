@@ -81,4 +81,14 @@ export class PhotosService {
             return { success: true, posts: newPosts }
         }), catchError(() => of({ success: false, posts: [] })));
     }
+
+    postReaction(url: string): Observable<{ success: boolean, likes: number, liked: boolean }> {
+        return this.http.post<{ liked: boolean, likes: number }>(
+            url,
+            null,
+            { withCredentials: true }
+        ).pipe(map((data) => {
+            return { success: true, ...data }
+        }), catchError(() => of({ success: false, likes: 0, liked: false })));
+    }
 }
