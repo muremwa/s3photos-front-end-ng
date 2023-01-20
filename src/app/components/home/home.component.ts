@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.postQuerySubscription.unsubscribe();
+        this.photoService.postQuery.next('');
     }
 
     fetchPosts () {
