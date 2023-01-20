@@ -94,7 +94,7 @@ export class PhotosService {
     }
 
     uploadPost(data: FormData): Observable<{ success: boolean, post: IPost | null, errors: IUploadErrors }> {
-        type uploadResponse = { success: true, post: IPost } | { success: false, errors: IUploadErrors };
+        type uploadResponse = { success: boolean, post: IPost, errors: IUploadErrors };
 
         return this.http.post<uploadResponse>(
             environment.uploadPostUrl,
@@ -104,7 +104,7 @@ export class PhotosService {
             console.assert(response.success);
             return {
                 success: true,
-                post: response.success ? response.post : null,
+                post: response.post,
                 errors: { caption: [], file: [], your_name: []}
             }
         }), catchError(({ error }) => of({ success: false, post: null, errors: error.errors })));
