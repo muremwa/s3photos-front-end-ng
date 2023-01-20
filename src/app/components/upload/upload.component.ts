@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
 import { FormGroup, FormControl } from "@angular/forms";
 
 import { PhotosService } from "../../utils/services/photos.service";
@@ -9,14 +9,22 @@ import { PhotosService } from "../../utils/services/photos.service";
     templateUrl: './upload.component.html',
     styleUrls: ['./upload.component.sass']
 })
-export class UploadComponent {
+export class UploadComponent implements OnInit {
     uploadForm = new FormGroup({
         file: new FormControl(null, { nonNullable: true }),
         caption: new FormControl('', { nonNullable: true }),
         yourName: new FormControl('', { nonNullable: true }),
     })
 
-    constructor(private photoService: PhotosService, private router: Router) {}
+    constructor(private photoService: PhotosService, private router: Router, private currentRoute: ActivatedRoute) {}
+
+    ngOnInit() {
+        this.currentRoute.queryParams.subscribe(({ as }) => {
+            if (as) {
+                this.uploadForm.controls.yourName.setValue(as);
+            }
+        })
+    }
 
     async submitPost(event_: SubmitEvent) {
         if (this.uploadForm.valid) {
@@ -29,5 +37,4 @@ export class UploadComponent {
             });
         }
     }
-
 }
