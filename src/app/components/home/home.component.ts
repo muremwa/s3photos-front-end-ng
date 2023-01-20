@@ -18,6 +18,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     constructor(private currentRoute: ActivatedRoute, public photoService: PhotosService) {}
 
     ngOnInit(): void {
+        let globalSearch = true; // avoid double calls to the API
+
+        this.postQuerySubscription = this.photoService.postQuery.subscribe((value) => {
+            this.postQuery = value;
+        });
+
         // listen to change in params
         this.currentRoute.queryParams.subscribe((data) => {
             const postQueryParam = data['post-query'];
@@ -25,16 +31,16 @@ export class HomeComponent implements OnInit, OnDestroy {
             // if the param is empty/undefined don't set it
             // unless there's a value on postQuery
             if (postQueryParam || (!postQueryParam && this.postQuery)) {
+                globalSearch = false;
                 this.photoService.postQuery.next(postQueryParam);
                 this.fetchPosts();
             }
         });
 
-        this.postQuerySubscription = this.photoService.postQuery.subscribe((value) => {
-            this.postQuery = value;
-        });
-
-        this.fetchPosts();
+        if (globalSearch) {
+            // fetch posts if there's no post-query
+            this.fetchPosts();
+        }
     }
 
     ngOnDestroy() {
