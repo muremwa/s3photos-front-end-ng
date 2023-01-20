@@ -13,6 +13,7 @@ import { UploadComponent } from './components/upload/upload.component';
 import { RouterModule } from "@angular/router";
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ObjectEntriesPipe } from './utils/pipes/object-entries.pipe';
+import { PreviewImageDirective } from './utils/directives/preview-image.directive';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ObjectEntriesPipe } from './utils/pipes/object-entries.pipe';
         UploadComponent,
         NotFoundComponent,
         ObjectEntriesPipe,
+        PreviewImageDirective,
     ],
     imports: [
         BrowserModule,

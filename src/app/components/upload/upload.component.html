@@ -2,9 +2,9 @@
     <form [formGroup]="uploadForm" method="POST" id="form-upload" enctype="multipart/form-data" (submit)="submitPost($event)">
         <div class="text-center legend-form">Upload an image to <span class="s3">s3photos</span></div>
 
-        <div class="img-to-up">
+        <div class="img-to-up" #previewDiv>
             <h6 class="text-center">You are about to upload the image below</h6>
-            <img src="" alt="image to be uploaded" id="image-to-call">
+            <img src="" alt="image to be uploaded" id="image-to-call" #previewElement>
         </div>
 
         <!-- Image File -->
@@ -14,7 +14,7 @@
             </ngb-alert>
             <ng-template #fileInfo><ngb-alert type="info">Choose an image</ngb-alert></ng-template>
             <label for="image-file-input">File</label>
-            <input required formControlName="file" type="file" accept="image/*" class="form-control" name="file" id="image-file-input">
+            <input [previewSelectedImage]="[previewDiv, previewElement]" required formControlName="file" type="file" accept="image/*" class="form-control" name="file" id="image-file-input">
         </div>
 
         <hr>
