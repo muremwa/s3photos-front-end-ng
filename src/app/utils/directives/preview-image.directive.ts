@@ -9,7 +9,7 @@ export class PreviewImageDirective {
      * Receives an array with two elements, a div and an image element.
      * The div is the parent to the image.
      * */
-    private reader = new FileReader();
+    public reader = new FileReader();
 
     @Input() set previewSelectedImage (elements: [HTMLDivElement, HTMLImageElement]) {
         const [ parentDiv, previewElement ] = elements;
@@ -24,7 +24,6 @@ export class PreviewImageDirective {
     }
 
     @HostListener('change', ['$event.target']) onSelectFile (input: HTMLInputElement) {
-        console.log('here listening')
         if (input && input.files && input.files[0]) {
             this.reader.readAsDataURL(input.files[0])
         }
