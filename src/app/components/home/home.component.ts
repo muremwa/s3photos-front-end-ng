@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     postQuerySubscription: Subscription;
     postQuery: string;
 
-    constructor(private currentRoute: ActivatedRoute, public photoService: PhotosService) {}
+    constructor(public currentRoute: ActivatedRoute, public photoService: PhotosService) {}
 
     ngOnInit(): void {
         let globalSearch = true; // avoid double calls to the API
