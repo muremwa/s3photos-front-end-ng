@@ -11,14 +11,13 @@ describe('PhotosService', () => {
     const customErrorFactory = () => new HttpErrorResponse({ status: 500 });
 
     beforeEach(() => {
-        const spy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+        hSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
         TestBed.configureTestingModule({
             providers: [
-                { provide: HttpClient, useValue: spy }
+                { provide: HttpClient, useValue: hSpy }
             ]
         });
         service = TestBed.inject(PhotosService);
-        hSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
     });
 
     it('should be created', () => {
