@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
         fragment: 'ignored'
     }
 
-    constructor(private router: Router, public photoService: PhotosService) {}
+    constructor(public router: Router, public photoService: PhotosService) {}
 
     ngOnInit() {
         this.photoService.postQuery.subscribe((value) => {
