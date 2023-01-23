@@ -19,20 +19,20 @@ export class UploadComponent implements OnInit {
     constructor(private photoService: PhotosService, private router: Router, private currentRoute: ActivatedRoute) {}
 
     ngOnInit() {
-        this.currentRoute.queryParams.subscribe(({ as }) => {
-            if (as) {
-                this.uploadForm.controls.yourName.setValue(as);
+        this.currentRoute.queryParams.subscribe(({ as: asParam }) => {
+            if (asParam) {
+                this.uploadForm.controls.yourName.setValue(asParam);
             }
         })
     }
 
-    async submitPost(event_: SubmitEvent) {
+    submitPost(event_: SubmitEvent) {
         if (this.uploadForm.valid) {
             const formData = new FormData(event_.target as HTMLFormElement);
 
-            this.photoService.uploadPost(formData).subscribe((response) => {
+            this.photoService.uploadPost(formData).subscribe(async (response) => {
                 if (response.success) {
-                    this.router.navigate([''])
+                    await this.router.navigate(['']);
                 }
             });
         }
