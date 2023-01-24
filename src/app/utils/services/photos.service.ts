@@ -109,4 +109,11 @@ export class PhotosService {
             }
         }), catchError(({ error }) => of({ success: false, post: null, errors: error.errors })));
     }
+
+    uploadPostStatus(): Observable<boolean> {
+        return this.http.get(
+            environment.uploadPostUrl,
+            { observe: 'response' }
+        ).pipe(map((response) => response.ok), catchError(() => of(false)));
+    }
 }

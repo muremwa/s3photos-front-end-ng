@@ -14,6 +14,7 @@ import { RouterModule } from "@angular/router";
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ObjectEntriesPipe } from './utils/pipes/object-entries.pipe';
 import { PreviewImageDirective } from './utils/directives/preview-image.directive';
+import { ErrorComponent } from './components/error/error.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { PreviewImageDirective } from './utils/directives/preview-image.directiv
         NotFoundComponent,
         ObjectEntriesPipe,
         PreviewImageDirective,
+        ErrorComponent,
     ],
     imports: [
         BrowserModule,
