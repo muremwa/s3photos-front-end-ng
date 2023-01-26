@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     posts: Array<IPost> = [];
     postQuerySubscription: Subscription;
     postQuery: string;
+    postLoadingError: boolean;
 
     constructor(public currentRoute: ActivatedRoute, public photoService: PhotosService) {}
 
@@ -51,7 +52,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     fetchPosts () {
         this.photoService.fetchPosts(this.postQuery).subscribe(({ success, posts }) => {
             if (success) {
-                this.posts = posts
+                this.posts = posts;
+                this.postLoadingError = false;
+            } else {
+                this.postLoadingError = true;
             }
         });
     }

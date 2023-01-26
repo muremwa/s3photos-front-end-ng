@@ -33,9 +33,8 @@ describe('ProgressInterceptor', () => {
             { type: HttpEventType.Sent },
             { type: HttpEventType.UploadProgress, loaded: 40, total: 100, progress: 40/100 },
             { type: HttpEventType.UploadProgress, loaded: 40, progress: 70 },
-            { type: HttpEventType.DownloadProgress, loaded: 40, total: 100, progress: 40/100 },
-            { type: HttpEventType.DownloadProgress, loaded: 40, progress: 70 },
-            { type: HttpEventType.ResponseHeader, progress: 95 },
+            { type: HttpEventType.ResponseHeader, progress: 95, ok: true },
+            { type: HttpEventType.ResponseHeader, progress: 0, ok: false },
             { type: HttpEventType.Response, progress: 100 },
         ].forEach((event) => {
             const sampleHandler = { handle: () => of(event)};

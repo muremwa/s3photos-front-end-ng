@@ -19,13 +19,8 @@ export class ProgressInterceptor implements HttpInterceptor {
                     this.progressService.progressIndicator.next(value);
                     break;
 
-                case HttpEventType.DownloadProgress:
-                    const value_ = event.total? event.loaded / event.total: 70;
-                    this.progressService.progressIndicator.next(value_);
-                    break;
-
                 case HttpEventType.ResponseHeader:
-                    this.progressService.progressIndicator.next(95);
+                    this.progressService.progressIndicator.next(event.ok? 95: 0);
                     break;
 
                 case HttpEventType.Response:
