@@ -22,10 +22,6 @@ describe('ProgressInterceptor', () => {
         progress = TestBed.inject(ProgressService);
     });
 
-    afterEach(() => {
-        // httpMock.verify();
-    })
-
     it('should be created', (done) => {
         const sampleRequest = { clone: () => ({})};
         interceptor = TestBed.inject(ProgressInterceptor);
