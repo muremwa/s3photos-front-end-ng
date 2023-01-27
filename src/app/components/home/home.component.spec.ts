@@ -50,6 +50,14 @@ describe('HomeComponent', () => {
         expect(component.postQuerySubscription).toBeTruthy();
         expect(component.postQuery).toEqual('sample2');
         expect(component.posts).toEqual(posts);
+        expect(component.postLoadingError).toBeFalse();
+    });
+
+    it('should fail fetching posts', () => {
+        expect(component.postLoadingError).toBeFalsy();
+        photoSpy.fetchPosts.and.returnValue(of({ success: false, posts: [] }));
+        component.ngOnInit();
+        expect(component.postLoadingError).toBeTrue();
     });
 
     it('should react to posts', () => {
@@ -63,5 +71,5 @@ describe('HomeComponent', () => {
         component.reactToPost(post.likingUrl, post.id);
         expect(component.posts[0].liked).toEqual(expectedLikeStatus.liked);
         expect(component.posts[0].likes).toEqual(expectedLikeStatus.likes);
-    })
+    });
 });

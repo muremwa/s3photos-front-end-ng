@@ -36,10 +36,14 @@
         <div class="container" id="no-posts">
             <div class="text-center">
                 <h2>
-                    No posts available at this moment
+                    <ng-container [ngSwitch]="postLoadingError">
+                        <ng-container *ngSwitchCase="true">An error occurred fetching posts</ng-container>
+                        <ng-container *ngSwitchCase="false">No posts available at this moment</ng-container>
+                        <ng-container *ngSwitchDefault>Fetching posts</ng-container>
+                    </ng-container>
                     <ng-container *ngIf="postQuery"> for '{{ postQuery }}'</ng-container>
                 </h2>
-                <a routerLink="upload" [queryParams]="{ 'as': postQuery }" class="btn btn-dark upload-btn">
+                <a *ngIf="postLoadingError === false" routerLink="upload" [queryParams]="{ 'as': postQuery }" class="btn btn-dark upload-btn">
                     Upload to
                     <span class="s3">S3photos</span>
                     <ng-container *ngIf="postQuery"> as {{ postQuery }}</ng-container>

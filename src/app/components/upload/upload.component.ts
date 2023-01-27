@@ -33,6 +33,8 @@ export class UploadComponent implements OnInit {
             this.photoService.uploadPost(formData).subscribe(async (response) => {
                 if (response.success) {
                     await this.router.navigate(['']);
+                } else {
+                    await this.router.navigate(['error'], { queryParams: { error: 'network' } });
                 }
             });
         }

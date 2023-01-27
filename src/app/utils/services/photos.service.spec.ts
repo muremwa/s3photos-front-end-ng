@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
+import { of, throwError } from 'rxjs';
 
 import { Cases, PhotosService } from './photos.service';
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { of, throwError } from 'rxjs';
 
 
 describe('PhotosService', () => {
@@ -128,6 +128,18 @@ describe('PhotosService', () => {
             expect(success).toBeTrue();
             expect(post).toEqual(sampleResponsePost);
         });
+        done();
+    });
+
+    it('should get the status of upload', (done) => {
+        hSpy.get.and.returnValue(of(new HttpResponse({ status: 200 })));
+        service.uploadPostStatus().subscribe((isAvailable) => expect(isAvailable).toBeTrue());
+
+        hSpy.get.and.returnValue(of(new HttpResponse({ status: 400 })));
+        service.uploadPostStatus().subscribe((isAvailable) => expect(isAvailable).toBeFalse());
+
+        hSpy.get.and.returnValue(throwError(() => new HttpErrorResponse({ status: 500 })));
+        service.uploadPostStatus().subscribe((isAvailable) => expect(isAvailable).toBeFalse());
         done();
     });
 });

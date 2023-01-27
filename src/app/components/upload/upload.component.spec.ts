@@ -6,6 +6,8 @@ import { of } from 'rxjs';
 import { UploadComponent } from './upload.component';
 import { PhotosService } from "../../utils/services/photos.service";
 import {IUploadErrors} from "../../types/iupload-errors";
+import {ErrorComponent} from "../error/error.component";
+import {HomeComponent} from "../home/home.component";
 
 
 describe('UploadComponent', () => {
@@ -21,7 +23,10 @@ describe('UploadComponent', () => {
             providers: [
                 { provide: PhotosService, useValue: photoSpy }
             ],
-            imports: [RouterTestingModule]
+            imports: [RouterTestingModule.withRoutes([
+                { path: '', component: HomeComponent },
+                { path: 'error', component: ErrorComponent }
+            ])]
         }).compileComponents();
 
         fixture = TestBed.createComponent(UploadComponent);
@@ -53,6 +58,9 @@ describe('UploadComponent', () => {
         const subEvent = new SubmitEvent('submit');
         Object.defineProperty(subEvent, 'target', { writable: false, value: document.createElement('form')});
         component.submitPost(subEvent)
+        expect(component).toBeTruthy();
+        photoSpy.uploadPost.and.returnValue(of({ success: false, post: null, errors: {} as IUploadErrors }));
+        component.submitPost(subEvent);
         expect(component).toBeTruthy();
         done();
     })
